@@ -72,6 +72,7 @@ async function registerUser(req, res) {
 }
 
 // Log in a user
+// Log in a user
 async function loginUser(req, res) {
   const { email, password } = req.body;
 
@@ -85,7 +86,20 @@ async function loginUser(req, res) {
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (passwordMatch) {
-      res.status(200).json({ message: "Login successful" });
+      // If the password matches, send the user data in the response
+      res.status(200).json({
+        message: "Login successful",
+        user: {
+          nik: user.nik,
+          email: user.email,
+          nama: user.nama,
+          nomerTelpon: user.nomerTelpon,
+          jenisKelamin: user.jenisKelamin,
+          alamat: user.alamat,
+          userType: user.userType,
+          tanggalLahir: user.tanggalLahir,
+        },
+      });
     } else {
       res.status(401).json({ error: "Incorrect password" });
     }
