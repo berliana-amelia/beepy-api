@@ -6,6 +6,7 @@ const reportRoute = require("./routes/reportRoute");
 const productRoute = require("./routes/productRoute");
 const contactRoute = require("./routes/contactRoute");
 const authRoute = require("./routes/authRoute");
+const connectionRoute = require("./routes/connectionRoute");
 const errorMiddleware = require("./middleware/errorMiddleware");
 const cors = require("cors");
 
@@ -27,6 +28,7 @@ app.use("/user", authRoute);
 app.use("/report", reportRoute);
 app.use("/api/product", productRoute);
 app.use("/contact", contactRoute);
+app.use("/conn", connectionRoute);
 
 app.get("/", (req, res) => {
   res.send("Hello NODE API");

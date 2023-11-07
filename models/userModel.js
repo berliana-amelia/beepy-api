@@ -32,7 +32,17 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
   tanggalLahir: {
-    type: Date,
+    type: String,
+  },
+  signUpDate: {
+    type: String, // Store the date as a string
+    default: function () {
+      const currentDate = new Date();
+      const year = currentDate.getFullYear();
+      const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+      const day = String(currentDate.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    },
   },
 });
 

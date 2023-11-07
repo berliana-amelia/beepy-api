@@ -67,7 +67,9 @@ async function registerUser(req, res) {
     await user.save();
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
-    res.status(400).json({ error: "Registration failed" });
+    res
+      .status(400)
+      .json({ error: "Registration failed, NIK already registered" });
   }
 }
 
@@ -158,10 +160,38 @@ const getAllUsers = async (req, res) => {
     res.status(500).json({ error: "Failed to retrieve users" });
   }
 };
+
+async function deleteUserByNIK(req, res) {
+  const nik = req.params.nik; // Extract NIK from the request parameters
+
+  try {
+    // Find the user by NIK
+    const user = await User.findOne({ nik });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Delete the user with the specified NIK
+    await User.deleteOne({ nik });
+
+    // Also, find and delete the associated connection with the same NIK
+    await Connection.deleteOne({ nik });
+
+    res.status(200).json({
+      message: "User and associated connection deleted successfully",
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Delete user and connection by NIK failed" });
+  }
+}
+
+// Export the delete function along with other functions
 module.exports = {
   getAllUsers,
   registerUser,
   loginUser,
   updateUserByNIK,
   getUserByNIK,
+  deleteUserByNIK, // Add the delete function
 };
