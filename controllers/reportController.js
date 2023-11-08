@@ -175,6 +175,7 @@ const updateStatusByReportID = asyncHandler(async (req, res) => {
   try {
     const { reportID } = req.params;
     const { statusID } = req.body;
+    const { description } = req.body;
 
     const report = await Report.findOne({ reportID });
 
@@ -184,6 +185,7 @@ const updateStatusByReportID = asyncHandler(async (req, res) => {
     }
 
     report.statusID = statusID; // Update the status field
+    report.description = description;
 
     // You can also update other fields as needed
     // report.fieldName = req.body.fieldName;
