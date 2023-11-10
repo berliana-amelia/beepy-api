@@ -34,7 +34,7 @@ const reportSchema = mongoose.Schema(
       required: [true, "Please enter a nik"],
     },
     connectionID: {
-      type: Number,
+      type: String,
       required: [true, "Please enter a connection ID"],
     },
     categoryID: {
